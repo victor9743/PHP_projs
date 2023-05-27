@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class LogErro extends Model
 {
@@ -12,14 +13,9 @@ class LogErro extends Model
     use HasFactory;
     protected $fillable = ['descricao'];
 
-    public function getAll() 
+    protected static function salvar($descricao) 
     {
-
-    }
-
-    protected static function salvar($arrayCampos) 
-    {
-        self::create($arrayCampos);
+        return DB::insert('insert into log_erros (descricao, created_at) values (?, ?)', [$descricao, date("Y-m-d H:i:s")]);
     }
 
 }

@@ -25,23 +25,25 @@ class Entrada_Controller extends Controller
     public function salvar(Request $campos)
     {
         try {
-            $this->query = $this->modelConnection::salvar(["descricao" => $campos->descricao, "valor" => $campos->valor]);
+ 
+            $this->query = $this->modelConnection::salvar($campos->descricao, $campos->valor);
             
             if ($this->query) {
-                self::log(["descricao" => "Requisicao com token ". $campos->_token." salvar com sucesso"]);
+                self::log("Requisicao com token ". $campos->_token." salvar com sucesso");
             }
             return redirect("/")->with('msg','Requisição criado com sucesso !!!');
 
         } catch (\Throwable $th) {
             $this->query = $th->getMessage();
-            self::logErro(["descricao" => $this->query ]);
+            self::logErro($this->query);
             
             return view('errors.500', ['erro'=> false]);
         }
     }
 
-    // public function ($id)
-    // {
-    //     return view('Entradas.save', [''=> false]);   
-    // }
+    public function remove($id)
+    {
+
+    }
+
 }

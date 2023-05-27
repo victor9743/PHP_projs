@@ -16,14 +16,9 @@ class Entrada extends Model
         return DB::table("entradas")->get();
     }
 
-    protected static function salvar($arrayCampos) 
+    protected static function salvar($descricao, $valor) 
     {
-        if(self::create($arrayCampos)) {
-            return true;
-
-        } else {
-            return false;
-        }
+        return DB::insert('insert into entradas (descricao, valor, created_at) values (?, ?, ?)', [$descricao, $valor, date("Y-m-d H:i:s")]);
     }
 
 }

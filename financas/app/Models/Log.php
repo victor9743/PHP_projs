@@ -4,19 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Log extends Model
 {
     use HasFactory;
     protected $fillable = ['descricao'];
 
-    public function getAll() 
+    protected static function salvar($descricao) 
     {
-
-    }
-
-    protected static function salvar($arrayCampos) 
-    {
-        self::create($arrayCampos);
+        return DB::insert('insert into logs (descricao, created_at) values (?, ?)', [$descricao, date("Y-m-d H:i:s")]);
     }
 }
