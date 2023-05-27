@@ -18,4 +18,5 @@ Route::get('/', [Index_Controller::class, 'index']);
 Route::get('/entrada', [Entrada_Controller::class, 'show']);
 Route::get('/entrada/id/{id}/tipo/{tipo}', [Entrada_Controller::class, 'show'])->name('entrada.show');
 Route::post('/entrada', [Entrada_Controller::class, 'salvar']);
+Route::delete('/entrada/id/{id}', [Entrada_Controller::class, 'remove']);
 

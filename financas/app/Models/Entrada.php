@@ -21,4 +21,9 @@ class Entrada extends Model
         return DB::insert('insert into entradas (descricao, valor, created_at) values (?, ?, ?)', [$descricao, $valor, date("Y-m-d H:i:s")]);
     }
 
+    protected static function remover($id)
+    {
+        return DB::table('entradas')->delete($id);
+    }
+
 }

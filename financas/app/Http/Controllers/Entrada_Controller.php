@@ -31,19 +31,30 @@ class Entrada_Controller extends Controller
             if ($this->query) {
                 self::log("Requisicao com token ". $campos->_token." salvar com sucesso");
             }
-            return redirect("/")->with('msg','Requisição criado com sucesso !!!');
+            return redirect("/")->with('msg','Requisição salva com sucesso !!!');
 
         } catch (\Throwable $th) {
             $this->query = $th->getMessage();
             self::logErro($this->query);
             
-            return view('errors.500', ['erro'=> false]);
+            return view('Entradas.new', ['erro'=> false]);
         }
     }
 
-    public function remove($id)
+    public function remove()
     {
+        try {
+            $query = $this->modelConnection::remover(request('id'));
 
+            if($query) {
+                return redirect("/")->with('msg','Entrada removida com sucesso !!!');
+            }
+
+        } catch (\Throwable $th) {
+            $this->query = $th->getMessage();
+            self::logErro($this->query);
+            return redirect("/")->with('msg','Erro na requisicao');
+        }
     }
 
 }

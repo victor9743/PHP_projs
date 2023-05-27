@@ -5,13 +5,13 @@
     $total = 0;
 
     foreach ($financaList->entradas as $key => $entrada) {
-        array_push($arrayFinancas, ["id" => $entrada->id ,"tipo" => "entrada", "descricao" => $entrada->descricao, "valor" => $entrada->valor, "criadoEm" => $entrada->created_at]);
+        array_push($arrayFinancas, ["id" => $entrada->id ,"tipo" => "entrada", "descricao" => $entrada->descricao, "valor" => $entrada->valor, "criadoEm" => $entrada->created_at, "removeLink" => 'entrada.remove']);
         $entradas += $entrada->valor;
     }
 
     foreach ($financaList->saidas as $key => $saida) {
         
-        array_push($arrayFinancas, ["id" => $entrada->id,"tipo" => "saida", "descricao" => $saida->descricao, "valor" => $saida->valor, "criadoEm" => $saida->created_at]);
+        array_push($arrayFinancas, ["id" => $entrada->id,"tipo" => "saida", "descricao" => $saida->descricao, "valor" => $saida->valor, "criadoEm" => $saida->created_at, "removeLink" => 'saida.remove']);
         $saidas += $entrada->saida;
     }
 
@@ -66,6 +66,12 @@
                 <td><?php echo date_format($date,"d-m-Y"); ?></td>
                 <td>
                     <a href="{{ route('entrada.show', ['id' => $financa["id"], 'tipo' => $financa["tipo"]]) }}">Detalhes</a>
+
+                    <form action="/entrada/id/{{$financa["id"]}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger delete-btn"><ion-icon name="trash-outline"></ion-icon>Remover</button>
+                    </form>
                 </td>
             </tr>
         <?php } ?>
