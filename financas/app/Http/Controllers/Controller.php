@@ -11,8 +11,7 @@ use App\Models\LogErro;
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
-    protected $modelConnection;
-
+    protected $modelConnection, $query, $objeto, $db;
 
     public function log($msg)
     {
@@ -22,6 +21,6 @@ class Controller extends BaseController
     public function logErro($msg)
     {
         LogErro::salvar($msg);
-    }   
+    }
     
 }

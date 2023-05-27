@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Entrada extends Model
 {
@@ -12,7 +13,7 @@ class Entrada extends Model
 
     public function getAll() 
     {
-
+        return DB::table("entradas")->get();
     }
 
     protected static function salvar($arrayCampos) 
