@@ -16,9 +16,17 @@ class Entrada extends Model
         return DB::table("entradas")->get();
     }
 
-    protected static function salvar($descricao, $valor) 
+    protected static function salvar($descricao, $valor, $id = "") 
     {
-        return DB::insert('insert into entradas (descricao, valor, created_at) values (?, ?, ?)', [$descricao, $valor, date("Y-m-d H:i:s")]);
+        if(empty($id)) {
+            return DB::insert('insert into entradas (descricao, valor, created_at) values (?, ?, ?)', [$descricao, $valor, date("Y-m-d H:i:s")]);
+
+        } else {
+            
+            return DB::table('entradas')
+                ->where('id', '=', $id)
+                ->update(['descricao' => $descricao, 'valor' => $valor]);
+        }
     }
 
     protected static function remover($id)

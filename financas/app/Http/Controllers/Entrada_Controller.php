@@ -25,8 +25,12 @@ class Entrada_Controller extends Controller
     public function salvar(Request $campos)
     {
         try {
- 
-            $this->query = $this->modelConnection::salvar($campos->descricao, $campos->valor);
+            
+            if(isset($campos->id)) {
+                $this->query = $this->modelConnection::salvar($campos->descricao, $campos->valor, $campos->id);
+            } else {
+                $this->query = $this->modelConnection::salvar($campos->descricao, $campos->valor);
+            }
             
             if ($this->query) {
                 self::log("Requisicao com token ". $campos->_token." salvar com sucesso");

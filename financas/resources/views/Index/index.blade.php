@@ -11,8 +11,8 @@
 
     foreach ($financaList->saidas as $key => $saida) {
         
-        array_push($arrayFinancas, ["id" => $entrada->id,"tipo" => "saida", "descricao" => $saida->descricao, "valor" => $saida->valor, "criadoEm" => $saida->created_at, "removeLink" => 'saida.remove']);
-        $saidas += $entrada->saida;
+        array_push($arrayFinancas, ["id" => $saida->id,"tipo" => "saida", "descricao" => $saida->descricao, "valor" => $saida->valor, "criadoEm" => $saida->created_at, "removeLink" => 'saida.remove']);
+        $saidas += $saida->valor;
     }
 
     usort($arrayFinancas, function($a, $b) {
@@ -25,7 +25,6 @@
         return ($dataA < $dataB) ? 1 : -1;
     });
     $total = $entradas - $saidas;
-
 ?>
 <div>
     <?php echo session('msg'); ?>
@@ -65,17 +64,27 @@
                 <td><?php echo number_format($financa["valor"] / 100, 2, ',', '.'); ?></td>
                 <td><?php echo date_format($date,"d-m-Y"); ?></td>
                 <td>
-                    <a href="{{ route('entrada.show', ['id' => $financa["id"], 'tipo' => $financa["tipo"]]) }}">Detalhes</a>
+                    <?php if ($financa["tipo"] == "entrada") { ?>
+                        <a href="{{ route('entrada.show', ['id' => $financa["id"], 'tipo' => $financa["tipo"]]) }}">Detalhes</a>
 
-                    <form action="/entrada/id/{{$financa["id"]}}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger delete-btn"><ion-icon name="trash-outline"></ion-icon>Remover</button>
-                    </form>
+                        <form action="/entrada/id/{{$financa["id"]}}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger delete-btn"><ion-icon name="trash-outline"></ion-icon>Remover</button>
+                        </form>
+                    <?php } else {  ?>
+                        <a href="{{ route('saida.show', ['id' => $financa["id"], 'tipo' => $financa["tipo"]]) }}">Detalhes</a>
+
+                        <form action="/saida/id/{{$financa["id"]}}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger delete-btn"><ion-icon name="trash-outline"></ion-icon>Remover</button>
+                        </form>
+                    <?php } ?>
                 </td>
             </tr>
         <?php } ?>
     </tbody>
 </table>
 <a href="/entrada">Cadastrar Entrada</a>
-<a href="">Cadastrar Saida</a>
+<a href="/saida">Cadastrar Saida</a>
