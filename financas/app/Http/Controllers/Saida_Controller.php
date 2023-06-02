@@ -25,11 +25,14 @@ class Saida_Controller extends Controller
     public function salvar(Request $campos)
     {
         try {
+            $valor = $campos->valor;
+            $valor = str_replace(",","", $valor);
+            $valor = intval(str_replace(".","", $valor));
  
             if(isset($campos->id)) {
-                $this->query = $this->modelConnection::salvar($campos->descricao, $campos->valor, $campos->id);
+                $this->query = $this->modelConnection::salvar($campos->descricao, $valor, $campos->id);
             } else {
-                $this->query = $this->modelConnection::salvar($campos->descricao, $campos->valor);
+                $this->query = $this->modelConnection::salvar($campos->descricao, $valor);
             }
             
             if ($this->query) {
